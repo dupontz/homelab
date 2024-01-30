@@ -14,6 +14,9 @@ echo "Token acquired: $TOKEN"
 
 while [ ! -d /var/lib/rancher ]
 do
+	# Install tailscale
+    curl -fsSL https://tailscale.com/install.sh | sh
+	
 	curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.25.15+k3s2" K3S_URL=https://$SERVER_IP:6443 K3S_TOKEN=$TOKEN INSTALL_K3S_EXEC="--vpn-auth=name=tailscale,joinKey=tailscale,joinKey=$TAILSCALE_AUTH_TOKEN sh -
 	sleep 1
 done
