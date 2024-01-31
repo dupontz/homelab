@@ -9,4 +9,4 @@ done
 
 IFACE=$(grep 'set-name:' /etc/netplan/50-cloud-init.yaml | tr -d [:space:] | cut -f2 -d':')
 
-printf 'network:\n  ethernets:\n    %s:\n      addresses: [ 198.19.0.1/20 ]\n  version: 2' $IFACE | tee /etc/netplan/51-static.yaml
+printf 'network:\n  ethernets:\n    %s:\n      addresses: [ 198.19.0.2/20 ]\n  version: 2' $IFACE | tee /etc/netplan/51-static.yaml

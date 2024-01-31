@@ -2,6 +2,16 @@
 
 TOKEN=""
 TAILSCALE_AUTH_TOKEN=tskey-auth-k3i22C5CNTRL-vNKvFZB5nBgVLbZNJgZwBgD2k8a8yAKUe
+IP=""
+
+while [ -z "$IP" ]
+do
+	if ifconfig -s | grep tails ; then
+		IP=$( ifconfig tailscale0 | awk -F ' *|:' '/inet /{print $3}' | grep .)
+	fi
+	sleep 2
+done
+
 
 while [ -z "$TOKEN" ]
 do
@@ -13,15 +23,8 @@ done
 echo "Token acquired: $TOKEN"
 echo "Server ip: $SERVER_IP"
 
-IP=""
 
-while [ -z "$IP" ]
-do
-	if ifconfig -s | grep tails ; then
-		IP=$( ifconfig tailscale0 | awk -F ' *|:' '/inet /{print $3}' | grep .)
-	fi
-	sleep 2
-done
+
 
 while [ ! -d /var/lib/rancher ]
 do
