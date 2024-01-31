@@ -15,9 +15,9 @@ echo "Server ip: $SERVER_IP"
 
 while [ ! -d /var/lib/rancher ]
 do
-	# Install tailscale
-    curl -fsSL https://tailscale.com/install.sh | sh
-	curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.25.15+k3s2" K3S_URL=https://$SERVER_IP:6443 K3S_TOKEN=$TOKEN INSTALL_K3S_EXEC="--vpn-auth=name=tailscale,joinKey=tailscale,joinKey=$TAILSCALE_AUTH_TOKEN" sh -
+	IP=$( ifconfig tailscale0 | awk -F ' *|:' '/inet /{print $3}' | grep .)
+
+	curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.25.15+k3s2" K3S_URL=https://$SERVER_IP:6443 K3S_TOKEN=$TOKEN INSTALL_K3S_EXEC="--flannel-iface tailscale0 --node-ip $IP --node-external-ip $IP" sh -
 	sleep 1
 done
 
