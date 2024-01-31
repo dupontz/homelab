@@ -1,8 +1,19 @@
 #!/bin/bash
 
+
+IP=""
+
+while [ -z "$IP" ]
+do
+	if [ $( ifconfig -s | grep tail ) ]; 
+	then
+		IP=$( ifconfig tailscale0 | awk -F ' *|:' '/inet /{print $3}' | grep .)
+	fi
+	sleep 2
+done
+
 while [ ! -d /var/lib/rancher ]
 do  
-	IP=$( ifconfig tailscale0 | awk -F ' *|:' '/inet /{print $3}' | grep .)
 
 # Is flannel enough ? no need to add calico later on
 	curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.25.15+k3s2" INSTALL_K3S_EXEC="--flannel-iface tailscale0 --advertise-address $IP --node-ip $IP  --node-external-ip $IP --write-kubeconfig-mode 664" sh -
