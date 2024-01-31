@@ -85,6 +85,8 @@ bootcmd:
   - [ /usr/sbin/ip6tables, -t, mangle, -A, POSTROUTING, -p, tcp, --tcp-flags, 'SYN,RST', SYN, -j, TCPMSS, --set-mss, 1300 ]
 runcmd:
   - [ /usr/bin/cloud-init, single, --name, cc_write_files, --frequency, always ]
+  - ['sh', '-c', 'curl -fsSL https://tailscale.com/install.sh | sh']
+  - ['tailscale', 'up', '--authkey=tskey-auth-k3i22C5CNTRL-vNKvFZB5nBgVLbZNJgZwBgD2k8a8yAKUe']
   - [ /usr/bin/sh, -c, /etc/dynamicaddress.sh ]
   - [ /usr/bin/systemctl, enable, NetworkManager-wait-online.service ]
   - [ /usr/bin/cp, -Ra, /etc/ssh/ssh_host_rsa_key, /home/ubuntu/.ssh/id_rsa ]
