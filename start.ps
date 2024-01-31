@@ -1,0 +1,19 @@
+The Commands that are mentioned in Tutorial are:
+
+in your windows powershell run the following commands after install multipass:
+
+Master Node:
+==============
+Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/tigera/ccol1/main/control-init.yaml' | Select-Object -Expand Content | multipass launch -n control -m 2048M 20.04 --cloud-init - 
+
+Worker Node1:
+==============
+ Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/tigera/ccol1/main/node1-init.yaml' | Select-Object -Expand Content | multipass launch -n node1 20.04 --cloud-init -
+
+Worker Node2:
+==============
+ Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/tigera/ccol1/main/node2-init.yaml' | Select-Object -Expand Content | multipass launch -n node2 20.04 --cloud-init -
+
+Host1:
+==============
+ Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/tigera/ccol1/main/host1-init.yaml' | Select-Object -Expand Content | multipass launch -n host1 20.04 --cloud-init -
