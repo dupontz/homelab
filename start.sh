@@ -1,6 +1,9 @@
 #/bin/bash
 
 curl https://raw.githubusercontent.com/dupontz/homelab/main/mac/control-init.yaml | multipass launch -vvvv -n control 20.04 --memory 3G --cloud-init -
+curl https://raw.githubusercontent.com/dupontz/homelab/main/mac/control-init.yaml | multipass launch -vvvv -n control2 20.04 --memory 2G --cloud-init -
+
+
 curl https://raw.githubusercontent.com/dupontz/homelab/main/mac/node1-init.yaml | multipass launch -vvvv -n node1 20.04 --memory 8G --disk 30G --cloud-init -
 
  #ref https://blog.dsb.dev/posts/accessing-my-k3s-cluster-from-anywhere-with-tailscale/
